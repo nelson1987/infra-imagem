@@ -1,0 +1,9 @@
+CREATE USER postgres;
+CREATE DATABASE TesteDb;
+GRANT ALL PRIVILEGES ON DATABASE TesteDb TO postgres;
+
+CREATE TABLE IF NOT EXISTS "NovaTabela" (
+    "Id" UUID UNIQUE,
+    "NovidadeId" UUID NOT NULL,
+    PRIMARY KEY ("Id"),
+);
