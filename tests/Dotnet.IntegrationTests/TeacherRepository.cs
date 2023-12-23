@@ -1,10 +1,9 @@
-﻿namespace Dotnet.IntegrationTests
+﻿namespace Dotnet.IntegrationTests;
+
+public class TeacherRepository
 {
-    public class TeacherRepository
+    public Task InsertMany(IEnumerable<Teacher> orders)
     {
-        public Task InsertMany(IEnumerable<Teacher> orders)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

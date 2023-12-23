@@ -1,7 +1,6 @@
-﻿namespace Dotnet.IntegrationTests
+﻿namespace Dotnet.IntegrationTests;
+
+public enum OrderCancellationReasonEnum
 {
-    public enum OrderCancellationReasonEnum
-    {
-        Fraud = 1
-    }
+    Fraud = 1
 }

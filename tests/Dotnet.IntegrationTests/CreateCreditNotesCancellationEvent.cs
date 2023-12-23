@@ -1,6 +1,5 @@
-﻿namespace Dotnet.IntegrationTests
+﻿namespace Dotnet.IntegrationTests;
+
+internal class CreateCreditNotesCancellationEvent
 {
-    internal class CreateCreditNotesCancellationEvent
-    {
-    }
 }

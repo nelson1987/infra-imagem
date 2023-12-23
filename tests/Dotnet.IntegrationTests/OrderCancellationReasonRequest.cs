@@ -1,8 +1,7 @@
-﻿namespace Dotnet.IntegrationTests
+﻿namespace Dotnet.IntegrationTests;
+
+internal class OrderCancellationReasonRequest
 {
-    internal class OrderCancellationReasonRequest
-    {
-        public OrderCancellationReasonEnum Type { get; set; }
-        public string Description { get; set; }
-    }
+    public OrderCancellationReasonEnum Type { get; set; }
+    public required string Description { get; set; }
 }
