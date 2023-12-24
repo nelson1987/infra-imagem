@@ -1,7 +1,7 @@
-﻿using FluentValidation;
+﻿using DotNet.Domain;
+using FluentValidation;
 
-namespace DotNet.TeachersApi.Features;
-
+namespace DotNet.Application.Features.Teachers;
 public record AddTeacherCommand(Guid Id, string Nome);
 public class AddTeacherValidator : AbstractValidator<AddTeacherCommand>
 {
@@ -50,3 +50,4 @@ public interface IMessageBroker
     void Send(AddTeacherCreatedEvent request);
     AddTeacherCreatedEvent Consume();
 }
+public record AddTeacherCreatedEvent();
