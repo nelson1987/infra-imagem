@@ -13,10 +13,10 @@ public class AddTeacherValidator : AbstractValidator<AddTeacherCommand>
 public class AddTeacherHandler : IAddTeacherHandler
 {
     private readonly IValidator<AddTeacherCommand> _validator;
-    private readonly IClientEvent<AddTeacherCreatedEvent> _clientEvent;
+    private readonly IMessageBroker _clientEvent;
     private readonly ITeacherRepository _repository;
 
-    public AddTeacherHandler(IValidator<AddTeacherCommand> validator, ITeacherRepository repository, IClientEvent<AddTeacherCreatedEvent> clientEvent)
+    public AddTeacherHandler(IValidator<AddTeacherCommand> validator, ITeacherRepository repository, IMessageBroker clientEvent)
     {
         _validator = validator;
         _repository = repository;
@@ -45,24 +45,8 @@ public interface ITeacherRepository
     Teacher? Get(Guid id);
     void InsertMany(IEnumerable<Teacher> orders);
 }
-public class TeacherRepository : ITeacherRepository
+public interface IMessageBroker
 {
-    private readonly DatabaseContext context;
-    public TeacherRepository(DatabaseContext context)
-    {
-        this.context = context;
-    }
-    public Teacher? Get(Guid id)
-    {
-        return context.Teachers.FirstOrDefault(x => x.Id == id);
-    }
-
-    public void InsertMany(IEnumerable<Teacher> orders)
-    {
-        context.Teachers.AddRange(orders);
-    }
-}
-public class DatabaseContext
-{
-    public List<Teacher> Teachers { get { return new List<Teacher>() { }; } }
+    void Send(AddTeacherCreatedEvent request);
+    AddTeacherCreatedEvent Consume();
 }

@@ -2,7 +2,7 @@ using DotNet.TeachersApi.Features;
 using System.Net.Http.Json;
 using System.Text;
 
-namespace Dotnet.IntegrationTests;
+namespace Dotnet.IntegrationTests.WebApis;
 
 public class UnitTest1 : IClassFixture<AssetsManagerApiFixture>
 {
