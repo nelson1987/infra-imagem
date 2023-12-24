@@ -1,4 +1,5 @@
 using DotNet.TeachersApi.Features;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IAddTeacherHandler, AddTeacherHandler>();
-
+builder.Services.AddScoped<IValidator<AddTeacherCommand>, AddTeacherValidator>();
+builder.Services.AddScoped<IClientEvent<AddTeacherCreatedEvent>, AddTeacherCreatedClientEvent>();
+builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
+builder.Services.AddScoped(typeof(DatabaseContext));
+builder.Services.AddScoped(typeof(Broker));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

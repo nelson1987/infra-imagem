@@ -30,4 +30,9 @@
 	  <ProjectReference Include="..\DotNet.TeachersApi\DotNet.TeachersApi.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Consumers\" />
+	  <Folder Include="WebApis\" />
+	</ItemGroup>
+
 </Project>

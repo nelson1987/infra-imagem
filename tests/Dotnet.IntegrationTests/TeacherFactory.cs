@@ -1,4 +1,6 @@
-﻿namespace Dotnet.IntegrationTests;
+﻿using DotNet.TeachersApi.Features;
+
+namespace Dotnet.IntegrationTests;
 
 public static class TeacherFactory
 {

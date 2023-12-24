@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DotNet.TeachersApi.Features;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Text.Json;
 
@@ -16,6 +17,14 @@ public static class KafkaFixture
             .AddSingleton(_ => EventClient);
     //.AddSingleton<IEventClientConsumers>(_ => EventClientConsumers)
     //.AddSingleton<IEventClientProducer>(_ => EventClientProducer);
+    public static Task Produce<T>(T data)
+    {
+        using var cancellationToken = ExpiringCancellationToken();
+        AddTeacherCreatedClientEvent? evento = data as AddTeacherCreatedClientEvent;
+        return EventClient.Produce(
+                evento,
+                cancellationToken.Token);
+    }
     public static T Consume<T>(string topic, int timeout = 150)
     {
         try
@@ -33,6 +42,18 @@ public static class KafkaFixture
 }
 public interface IEventClient
 {
-    //TData Consume<TData>(string topicName, Func<string, TData> deserializer, CancellationToken cancellationToken = default);
     T Consume<T>(string topicName, Func<Stream, JsonSerializerOptions?, T?> deserialize, CancellationToken token = default);
+    Task Produce(AddTeacherCreatedClientEvent? addTeacherCreatedClientEvent, CancellationToken token);
+}
+public static class PostgresqlFixture
+{
+    public static DatabaseContext? Context { get; private set; }
+
+    static PostgresqlFixture() { Context = new DatabaseContext(); }
+}
+public static class BrokerFixture
+{
+    public static Broker? Broker { get; private set; }
+
+    static BrokerFixture() { Broker = new Broker(); }
 }

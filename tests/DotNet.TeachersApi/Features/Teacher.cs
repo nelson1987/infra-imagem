@@ -1,4 +1,4 @@
-﻿namespace Dotnet.IntegrationTests;
+﻿namespace DotNet.TeachersApi.Features;
 
 public class Teacher
 {
