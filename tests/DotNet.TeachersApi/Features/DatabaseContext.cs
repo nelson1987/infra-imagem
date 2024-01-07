@@ -1,4 +1,6 @@
-﻿namespace DotNet.TeachersApi.Features;
+﻿using DotNet.Domain;
+
+namespace DotNet.TeachersApi.Features;
 
 public class DatabaseContext
 {

@@ -1,6 +1,47 @@
-version: "3.9"
+version: '3.4'
 
 services:
+  financialcommitments.api:
+    image: ${DOCKER_REGISTRY-}financialcommitmentsapi
+    build:
+      context: .
+      dockerfile: FinancialCommitments.Api/Dockerfile    
+    depends_on:
+      - mongodb
+      - rabbitmq
+    ports:
+      - "5000:80"
+    environment:
+      ConnectionStrings__MongoDB: "mongodb://root:example@localhost:27017"
+      DatabaseSettings__DatabaseName: "FinanceDb"
+      DatabaseSettings__CollectionName: "FinancialCommitments"
+    networks:
+      - financialcommitments-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - financialcommitments-network
+  
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - financialcommitments-network
+
     # postgres:
     #     image: postgre
     #     # healthcheck:
@@ -13,9 +54,10 @@ services:
     #     #   - ./scripts/dump-dev.sql:/tmp/dump-dev.sql:ro
     #     ports:
     #       - 5432:5432
-  webapi:
-    image: api
-    container_name: api-infra
+    
+  # webapi:
+  #   image: api
+  #   container_name: api-infra
     # restart: always
     # ports:
     #   - ${POSTGRES_PORT}:5432
@@ -26,3 +68,7 @@ services:
     #   POSTGRES_ROOT_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
     # volumes:
     #   - ./scripts/dump-dev.sql:/tmp/dump-dev.sql:ro
+
+networks: 
+    financialcommitments-network:
+        driver: bridge
